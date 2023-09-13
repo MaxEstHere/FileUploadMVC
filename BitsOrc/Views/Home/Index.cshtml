@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<p><a asp-controller="FileUpload" asp-action="Index">Upload File</a></p>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>
+        This is a .NET web application that will allow users to upload a CSV file with the fields below, save the data in an MS SQL database </br>
+        and display the saved data on a page, as well as edit it and delete it from the database.
+        Through the interface and controller FileUpload we save the file to the UploadedFiles folder and show in the table the list of data that can be changed.
+        In the future it will be realized to save this data back to the file and transfer it to the client.
+    </p>
+</div>
+

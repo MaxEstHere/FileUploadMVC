@@ -1,0 +1,68 @@
+﻿@model List<Employee>
+<h1>File Upload</h1>
+
+<hr />
+
+<div>
+    <form asp-route="StreamFileUpload/Index" enctype="multipart/form-data" method="POST">
+        <input type="file" name="file" />
+        <button type="submit">Upload File</button>
+    </form>
+</div>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert" style="margin-top:20px">
+        @ViewBag.Message
+    </div>
+}
+</br>
+
+<h2>List of employees:</h2>
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered" id="userTable" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date of birth</th>
+                <th>Married</th>
+                <th>Phone</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>
+                        @user.Name <a asp-controller="FileUpload" asp-action="Edit" asp-route-id="@user.Id">Edit</a> |
+                        <a asp-controller="FileUpload" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                    </td>
+                    <td>@user.DateOfBirth.ToShortDateString() </td>
+                    <td>@(user.Married ? "Yes" : "No")</td>
+                    <td>@user.Phone</td>
+                    <td>@user.Salary</td>
+                </tr>
+            }
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.7/css/jquery.dataTables.css">
+            <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.7/js/jquery.dataTables.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                //refresh table
+                $(".refresh-button").click(function () {
+                    $.get("/Home/Index", function (data) {
+                        $("#user-table").html(data);
+                    });
+                });
+            });
+        </script>
+        </tbody>
+    </table>
+}
+else
+{
+    <p>DB is empty</p>
+}
